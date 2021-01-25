@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: fl-api-deploy
+  name: fl-api-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fl-api-deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: fl-api-deploy
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/labproj05/fl-api:5
+        name: fl-api
+        envFrom:
+        - configMapRef:
+            name: flashcards-cmap
+        - secretRef:
+            name: flashcards-secret
+        ports:
+        - containerPort: 8080
+        resources: {}
+status: {}
